@@ -6,6 +6,7 @@ Created on Mon Mar 10 18:48:58 2025
 """
 
 import random as rd
+import copy
 
 from voter import Voter
 from party import Party
@@ -38,12 +39,30 @@ class Simulation():
             self.partyList[i].name = newName
             self.partyList[i].ideology = rd.randint(0,100)
         
-        self.partyList = sort_parties(self.partyList)
+    
+    def election_day(self):
+            
+        for voter in self.voterList:
+            favoriteParty = self.partyList[0]
+            
+            for party in self.partyList:
+                if (abs(party.ideology - voter.ideology) < abs(favoriteParty.ideology - voter.ideology)):
+                    favoriteParty = party
+                    
+            favoriteParty.add_vote()
+                
+        self.partyList = sort_parties_by_votes(self.partyList)
+        
+        for party in self.partyList:
+            print(party.name, "have gotten", party.votes, "votes, and believe in", party.ideology)
         
         
             
-def sort_parties(partyList : list[Party]):    
+def sort_parties_by_ideology(partyList : list[Party]):    
     return sorted(partyList, key =lambda Party: Party.ideology)
+            
+def sort_parties_by_votes(partyList : list[Party]):    
+    return sorted(partyList, key =lambda Party: Party.votes)
             
     
     
