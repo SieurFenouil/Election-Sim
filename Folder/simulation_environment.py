@@ -6,7 +6,6 @@ Created on Mon Mar 10 18:48:58 2025
 """
 
 import random as rd
-import copy
 
 from voter import Voter
 from party import Party
@@ -21,6 +20,8 @@ class Simulation():
         
     def generate_voter_list(self, listSize):
 
+        self.voterList = []
+        
         for i in range(listSize):
             voter = Voter()
             newName = generate_voter_name()
@@ -30,6 +31,8 @@ class Simulation():
             self.voterList[i].ideology = rd.randint(0,100)
             
     def generate_party_list(self, listSize):
+        
+        self.partyList = []
                 
         for i in range(listSize):
             party = Party()
@@ -55,6 +58,9 @@ class Simulation():
         
         for party in self.partyList:
             print(party.name, "have gotten", party.votes, "votes, and believe in", party.ideology)
+            party.votes = 0
+            
+        
         
         
             
